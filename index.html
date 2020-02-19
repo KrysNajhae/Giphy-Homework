@@ -4,33 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giphy Genorator</title>
+
+    <style type="text/css">
+        button,
+        div,
+        form,
+        input {
+          margin: 10px;
+        }
+      </style>
     
 </head>
 <body>
    
    
+
+    
+    <div id="images">
+    </div>
+   
     <div class="container">
         <h1>Welcome To Giphy World</h1>
     
-        <!-- Movies will get dumped here -->
+        
         <div id="buttons-view"></div>
     
         <form id="makeUp-form">
-          
-           <input id="add-makeUp" type="submit" value="Click">
-        </form>
+            <label for="makeUp-input">Apply More!</label>
+            <input type="text" id="makeUp-input"><br>
+      
+            
+            <input id="add-makeUp" type="submit" value="Add More!">
+          </form>
     
     </div>
-    <div id="gifs-appear-here">
-
-    </div>
+   
+    <button id="Eyeliner-button">Eyeliner</button>
     
     <script src="https://code.jquery.com/jquery.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
     
-    var makeUp = ["Lipstick","Foundation","Eyeliner","Eyeshadow","Concealer","Highlighter","Lipgloss","Eyelashes"]
+    var makeUp = ["Lipstick","Foundation","Eyeshadow","Concealer","Highlighter","Lipgloss","Eyelashes"]
 
+// Button Function
     function renderButtons() {
 
 
@@ -42,23 +59,47 @@
     }
     }
     $("#add-makeUp").on("click", function(event) {
-        // event.preventDefault() prevents the form from trying to submit itself.
-        // We're using a form so that the user can hit enter instead of clicking the button if they want
+        
         event.preventDefault();
-
-        // This line will grab the text from the input box
-        var makeUp = $("#makeUp-input").val().trim();
-        // The movie from the textbox is then added to our array
+         var makeUp = $("#makeUp-input").val().trim();
         makeUp.push(makeUp);
-
-        // calling renderButtons which handles the processing of our movie array
         renderButtons();
       });
+        renderButtons();
 
-      // Calling the renderButtons function at least once to display the initial list of movies
-      renderButtons();
 
-   
+       
+                $("#Eyeliner-button").on("click", function() {
+
+        
+        var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&tag=eyeliner";
+
+        // Perfoming an AJAX GET request to our queryURL
+        $.ajax({
+        url: queryURL,
+        method: "GET"
+        })
+
+        // After the data from the AJAX request comes back
+        .then(function(response) {
+
+            
+            var imageUrl = response.data.image_original_url;
+
+            
+            var eyelinerImage = $("<img>");
+
+            
+            eyelinerImage.attr("src", imageUrl);
+            eyelinerImage.attr("alt", "Eyeliner Image");
+
+        
+            $("#images").prepend(eyelinerImage);
+        });
+        });
+
+
+       
         
     </script>
 </body>
