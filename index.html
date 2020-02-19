@@ -4,28 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giphy Genorator</title>
+    
 </head>
 <body>
-    <h1>Welcome To Giphy World</h1>
-
-    <div id="buttons">
+   
+   
+    <div class="container">
+        <h1>Welcome To Giphy World</h1>
+    
+        <!-- Movies will get dumped here -->
+        <div id="buttons-view"></div>
+    
+        <form id="makeUp-form">
+          
+           <input id="add-makeUp" type="submit" value="Click">
+        </form>
+    
+    </div>
+    <div id="gifs-appear-here">
 
     </div>
-    <div id="images">
+    
+    <script src="https://code.jquery.com/jquery.js"></script>
 
-    </div>
     <script type="text/javascript">
+    
+    var makeUp = ["Lipstick","Foundation","Eyeliner","Eyeshadow","Concealer","Highlighter","Lipgloss","Eyelashes"]
 
-    $(document).ready(function(){
+    function renderButtons() {
 
 
+    $("#buttons-view").empty();
+    for (var i = 0; i < makeUp.length; i++) {
+        var a = $("<button>");
+        a.text(makeUp[i]);
+        $("#buttons-view").append(a);
+    }
+    }
+    $("#add-makeUp").on("click", function(event) {
+        // event.preventDefault() prevents the form from trying to submit itself.
+        // We're using a form so that the user can hit enter instead of clicking the button if they want
+        event.preventDefault();
+
+        // This line will grab the text from the input box
+        var makeUp = $("#makeUp-input").val().trim();
+        // The movie from the textbox is then added to our array
+        makeUp.push(makeUp);
+
+        // calling renderButtons which handles the processing of our movie array
+        renderButtons();
+      });
+
+      // Calling the renderButtons function at least once to display the initial list of movies
+      renderButtons();
+
+   
         
-    })
-    
-    var topics = ["Lipstick","Foundation","Eyeliner","Eyeshadow","Concealer","Highlighter","Lipgloss","Eyelashes"]
-
-    
-
     </script>
 </body>
 </html>
